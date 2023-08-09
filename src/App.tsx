@@ -1,23 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {useGetPetsQuery} from "./store/services/petshop";
+import PetCard from "./Components/PetCard";
+import type { Pet } from './types'
+import { Container } from '@mui/material';
+import {Error} from "@mui/icons-material";
 
 function App() {
-  return (
+  const { data, error, isLoading } = useGetPetsQuery()
+  // @ts-ignore
+    return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {error ? (
+            <Error>Oh no, there was an error</Error>
+        ) : isLoading ? (
+            <>Loading...</>
+        ) : data ? (
+            <>
+              <h3>Pets</h3>
+              <Container maxWidth="xl" sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+                {data.map((pet: Pet) =>
+                    <PetCard {...pet} key={pet.id}/>
+                )}
+                </Container>
+            </>
+        ) : null}
       </header>
     </div>
   );
