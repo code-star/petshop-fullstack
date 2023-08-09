@@ -25,8 +25,8 @@ export default function PetCard(pet: Pet) {
         }
     };
     return (
-        <div>
-        <Card sx={{ maxWidth: 345 }}>
+        <div style={{margin: '1rem'}}>
+        <Card sx={{ maxWidth: 345, marginBottom: '0.5rem'}}>
             <CardActionArea>
                 <CardMedia
                     component="img"
