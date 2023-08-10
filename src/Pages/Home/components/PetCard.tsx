@@ -4,11 +4,14 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
-import type { Pet } from '../types'
-import {useAdoptPetMutation} from "../store/services/petshop";
-import SuccessAlert from "./SuccessAlert";
-import ErrorAlert from "./ErrorAlert";
-export default function PetCard(pet: Pet) {
+import type { Pet } from '../../../types'
+import {useAdoptPetMutation} from "../../../store/services/petshop";
+import SuccessAlert from "../../sharedcomponents/SuccessAlert";
+import ErrorAlert from "../../sharedcomponents/ErrorAlert";
+interface PetCardProps {
+    pet: Pet
+}
+export default function PetCard({pet} : PetCardProps) {
 
     const [adoptPetMutation, { isLoading, error , data}] = useAdoptPetMutation();
     const [showSuccess, setShowSuccess] = React.useState(false);

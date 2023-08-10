@@ -1,31 +1,31 @@
 import React from 'react';
-import {useGetPetsQuery} from "./store/services/petshop";
-import PetCard from "./Components/PetCard";
-import type { Pet } from './types'
-import { Container } from '@mui/material';
-import {Error} from "@mui/icons-material";
+import { Container, Typography, Button } from '@mui/material';
+import { Home } from './Pages/Home/Home';
+import CreatePetForm from "./Pages/CreatePet/components/CreatePetForm";
 
 function App() {
-  const { data, error, isLoading } = useGetPetsQuery()
-  // @ts-ignore
+const[showCreatePetForm, setShowCreatePetForm] = React.useState<boolean>(false);
+const showFormHandler = () => {
+    //show
+    setShowCreatePetForm(prevState => !prevState);
+}
+
     return (
     <div className="App">
       <header className="App-header">
-        {error ? (
-            <Error>Oh no, there was an error</Error>
-        ) : isLoading ? (
-            <>Loading...</>
-        ) : data ? (
-            <>
-              <h3>Pets</h3>
-              <Container maxWidth="xl" sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
-                {data.map((pet: Pet) =>
-                    <PetCard {...pet} key={pet.id}/>
-                )}
-                </Container>
-            </>
-        ) : null}
+        <Typography gutterBottom variant="h3" component="div" sx={{textAlign:'center'}}>
+              Pet Shop
+            </Typography>
       </header>
+        <div>
+        <Button id="create-pet" variant="contained" onClick={showFormHandler} sx={{marginBottom: '1rem', marginRight:'5rem'}}>
+            {showCreatePetForm ? 'Hide' : 'Create Pet'}
+            </Button>
+        </div>
+        <div>
+          { showCreatePetForm &&  <CreatePetForm /> }
+          { !showCreatePetForm &&  <Home/> }
+            </div>
     </div>
   );
 }

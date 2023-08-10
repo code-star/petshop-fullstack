@@ -7,3 +7,11 @@ export interface Pet {
     adopted: boolean
     photoLink: string
 }
+
+export interface CreatePet {
+    name: string
+    description: string
+    age: number
+    type: string
+    photoLink: string
+}

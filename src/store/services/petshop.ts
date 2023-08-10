@@ -1,10 +1,6 @@
-// Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import type {CreatePet, Pet} from '../../types'
 
-import type { Pet } from '../../types'
-
-
-// Define a service using a base URL and expected endpoints
 export const petShopApi = createApi({
     reducerPath: 'petShopApi',
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/api" }),
@@ -12,32 +8,26 @@ export const petShopApi = createApi({
     endpoints: (builder) => ({
         getPets: builder.query<Pet[], void>({
             query: () => `pets`,
-            providesTags: (result, error, arg) =>
-                result
-                    ? [...result.map(({ id }) => ({ type: 'Pet' as const, id })), 'Pet']
-                    : ['Pet'],
+            providesTags: ['Pet'],
         }),
-        addPet: builder.mutation<string, Omit<Pet, 'id'>>({
+        addPet: builder.mutation<Pet, CreatePet>({
             query: (body) => ({
-                url: 'post',
+                url: '/pets',
                 method: 'POST',
                 body,
             }),
             invalidatesTags: ['Pet'],
         }),
-        adoptPet: builder.mutation<string, Partial<Pet> & Pick<Pet, 'id'>>({
+        adoptPet: builder.mutation<string, Pick<Pet, 'id'>>({
             query: (pet) => ({
                 url: `pets/${pet.id}`,
                 method: 'PATCH',
             }),
-            invalidatesTags: (result, error, arg) =>
-                [{ type: 'Pet', id: arg.id }],
+            invalidatesTags: ['Pet']
         }),
     }),
 })
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
 export const {
     useGetPetsQuery,
     useAddPetMutation,
