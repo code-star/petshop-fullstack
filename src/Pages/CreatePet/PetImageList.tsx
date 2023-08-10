@@ -9,12 +9,21 @@ interface PetImageListProps {
 }
 export default function PetImageList({petType, setPetImage}: PetImageListProps) {
 
+    const[petImageListLabel, setPetImageListLabel] = React.useState<string>("Select an image from list")
+
+    const handleListItemClick = (image: string) => {
+        setPetImage(image);
+        setPetImageListLabel("Image selected successfully!")
+    }
+
     return (
         <>
-        <label id={"petImageList"}>Select an image from list</label>
+        <label id={"petImageList"}>{ petImageListLabel } </label>
         <ImageList sx={{ width: 500, height: 200 }} cols={3} rowHeight={164}>
             {petType === PetType.Cat && catItemData.map((item) => (
-                <ImageListItem key={item.img} onClick={event => setPetImage(item.img)}>
+                <ImageListItem key={item.img} onClick= {event =>
+                    handleListItemClick(item.img)
+                }>
                     <img
                         src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
                         srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
@@ -26,7 +35,10 @@ export default function PetImageList({petType, setPetImage}: PetImageListProps) 
 
             ))}
             {petType === PetType.Dog && dogItemData.map((item) => (
-                <ImageListItem key={item.img} onClick={event => setPetImage(item.img)}>
+                <ImageListItem key={item.img} onClick={event =>
+                    handleListItemClick(item.img)
+                }
+                >
                     <img
                         src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
                         srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
