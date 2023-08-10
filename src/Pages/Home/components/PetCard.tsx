@@ -20,8 +20,10 @@ export default function PetCard({pet} : PetCardProps) {
     const adoptPet = async () => {
         if (!isLoading) {
             try {
-                await adoptPetMutation({ id: pet.id });
-                setShowSuccess(true);
+               const message = await adoptPetMutation({ id: pet.id });
+               if (message) {
+                   setShowSuccess(true);
+               }
             } catch (error) {
                 setShowError(true);
             }
