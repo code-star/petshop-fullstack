@@ -3,7 +3,6 @@ import { Container, Typography, Button } from '@mui/material';
 import { Home } from './Pages/Home/Home';
 import CreatePetForm from "./Pages/CreatePet/CreatePetForm";
 import SuccessAlert from "./components/SuccessAlert";
-import {useAddPetMutation} from "./store/services/petshop";
 
 function App() {
 const[showCreatePetForm, setShowCreatePetForm] = React.useState<boolean>(false);
