@@ -10,6 +10,8 @@ interface PetImageListProps {
 export default function PetImageList({petType, setPetImage}: PetImageListProps) {
 
     return (
+        <>
+        <label id={"petImageList"}>Select an image from list</label>
         <ImageList sx={{ width: 500, height: 200 }} cols={3} rowHeight={164}>
             {petType === PetType.Cat && catItemData.map((item) => (
                 <ImageListItem key={item.img} onClick={event => setPetImage(item.img)}>
@@ -35,6 +37,7 @@ export default function PetImageList({petType, setPetImage}: PetImageListProps) 
 
             ))}
         </ImageList>
+        </>
     );
 }
 

@@ -2,7 +2,7 @@ import {useGetPetsQuery} from "../../store/services/petshop";
 import {Error} from "@mui/icons-material";
 import {Container} from "@mui/material";
 import {Pet} from "../../types";
-import PetCard from "./components/PetCard";
+import PetCard from "./PetCard";
 import React from "react";
 
 export function Home() {

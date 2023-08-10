@@ -2,44 +2,70 @@ import * as React from 'react';
 import { TextField, Button, Box, Radio, RadioGroup, FormControl, FormLabel, FormControlLabel } from '@mui/material';
 import { useState } from "react";
 import PetImageList from "./PetImageList";
-import {useAddPetMutation} from "../../../store/services/petshop"
-import SuccessAlert from '../../sharedcomponents/SuccessAlert';
-import ErrorAlert from '../../sharedcomponents/ErrorAlert';
+import {useAddPetMutation} from "../../store/services/petshop"
+import ErrorAlert from '../../components/ErrorAlert';
 
 export enum PetType {
     Cat = 'CAT',
     Dog = 'DOG'
 }
+interface CreatePetFormProps {
+ setShowCreatePetForm: React.Dispatch<React.SetStateAction<boolean>>,
+ setPetId: React.Dispatch<React.SetStateAction<string>>
+}
 
-export default function CreatePetForm() {
+export default function CreatePetForm({setShowCreatePetForm , setPetId}: CreatePetFormProps) {
     const [petName, setPetName] = useState<string>('');
     const [petDescription, setPetDescription] = useState<string>('');
     const [petAge, setPetAge] = useState<number>(0);
     const [petType, setPetType] = useState<PetType>(PetType.Cat)
     const [petImage, setPetImage] = useState<string>('');
 
-    const [addPet, { isLoading, isError, isSuccess, error, data }] = useAddPetMutation();
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
-     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) =>  {
+    const [addPet] = useAddPetMutation();
+
+    const validateForm = (): string => [
+            petName.length < 3 ? 'Name must be at least three characters long' : '',
+            petDescription.length < 15 ? 'Description must be at least fifteen characters long' : '',
+            petAge < 0 ? 'Age must be a positive number' : '',
+            petImage.length < 1 ? 'You must select an image' : ''
+        ]
+        .filter((error) => error !== '')
+            .join('. ')
+    ;
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) =>  {
         event.preventDefault();
+        const errors = validateForm();
+
+        if (errors.length > 0) {
+            setErrorMessage(prevState => errors);
+            return;
+        }
+
+        setErrorMessage(prevState => '')
+
        try {
            const pet = await addPet({ name: petName, description: petDescription, age: petAge, type: petType, photoLink: petImage }).unwrap()
            if (pet) {
-               setPetName('');
-               setPetDescription('');
-               setPetAge(0);
-               setPetType(PetType.Cat);
-               setPetImage('');
+               setPetName(prevState => '');
+               setPetDescription(prevState => '')
+               setPetAge(prevState => 0)
+               setPetType(prevState => PetType.Cat)
+               setPetImage(prevState => '')
+
+               setShowCreatePetForm(prevState => !prevState);
+               setPetId(prevState => pet.id)
            }
          } catch (error) {
-           console.log(error)
+           setErrorMessage(`Something unexpected happened. Pet not created!`)
        }
 }
 
     return (
         <>
-            { data &&  <SuccessAlert message={`You successfully add ${data.id} !`}/> }
-            { error &&  <ErrorAlert message={`Something unexpected happened. Pet not created!`}/> }
+            { errorMessage.length > 0 &&  <ErrorAlert message={errorMessage}/> }
             <Box
                 component="form"
                 sx={{
@@ -48,8 +74,7 @@ export default function CreatePetForm() {
                     flexDirection: 'column',
                     alignItems: 'center',
                 }}
-                noValidate
-                autoComplete="on"
+                autoComplete="off"
                 onSubmit={handleSubmit}
             >
                 <div>
@@ -63,6 +88,7 @@ export default function CreatePetForm() {
                         onChange={(event) => setPetName(event.target.value)}
                         fullWidth
                         helperText={"Name must be at least three characters long"}
+                        error={petName.length < 3}
                     />
                 </div>
                 <div>
@@ -77,6 +103,7 @@ export default function CreatePetForm() {
                         helperText={"Description must be at least fifteen characters long"}
                         multiline
                         maxRows={3}
+                        error={petDescription.length < 15}
                         fullWidth
 
                     />
@@ -93,6 +120,7 @@ export default function CreatePetForm() {
                         helperText={"Age must be at least 0"}
                         fullWidth
                         onChange={(event) => setPetAge( Number(event.target.value))}
+                        error = {petAge < 0}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -111,7 +139,7 @@ export default function CreatePetForm() {
                     </FormControl>
                 </div>
                 <div>
-                    <PetImageList petType={petType} setPetImage={setPetImage}/>
+                    <PetImageList petType={petType} setPetImage={setPetImage} />
                     <Button id="submit" variant="contained" color="primary" type="submit"> Submit </Button>
                 </div>
             </Box>
