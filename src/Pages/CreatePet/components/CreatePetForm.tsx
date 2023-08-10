@@ -1,13 +1,10 @@
 import * as React from 'react';
 import { TextField, Button, Box, Radio, RadioGroup, FormControl, FormLabel, FormControlLabel } from '@mui/material';
-
 import { useState } from "react";
 import PetImageList from "./PetImageList";
 import {useAddPetMutation} from "../../../store/services/petshop"
 import SuccessAlert from '../../sharedcomponents/SuccessAlert';
 import ErrorAlert from '../../sharedcomponents/ErrorAlert';
-
-
 
 export enum PetType {
     Cat = 'CAT',
@@ -21,13 +18,13 @@ export default function CreatePetForm() {
     const [petType, setPetType] = useState<PetType>(PetType.Cat)
     const [petImage, setPetImage] = useState<string>('');
 
-     const [addPet, { isLoading, isError, isSuccess, error, data }] = useAddPetMutation();
+    const [addPet, { isLoading, isError, isSuccess, error, data }] = useAddPetMutation();
 
      const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) =>  {
         event.preventDefault();
        try {
-           await addPet({ name: petName, description: petDescription, age: petAge, type: petType, photoLink: petImage })
-           if (isSuccess) {
+           const pet = await addPet({ name: petName, description: petDescription, age: petAge, type: petType, photoLink: petImage }).unwrap()
+           if (pet) {
                setPetName('');
                setPetDescription('');
                setPetAge(0);
