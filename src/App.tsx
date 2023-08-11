@@ -3,6 +3,7 @@ import { Container, Typography, Button } from '@mui/material';
 import { Home } from './Pages/Home/Home';
 import CreatePetForm from "./Pages/CreatePet/CreatePetForm";
 import SuccessAlert from "./components/SuccessAlert";
+import './App.css';
 
 function App() {
 const[showCreatePetForm, setShowCreatePetForm] = React.useState<boolean>(false);
@@ -21,16 +22,16 @@ const showFormHandler = () => {
             </Typography>
           { petId.length > 0 && <SuccessAlert message={`You successfully add ${petId} !`}/> }
       </header>
-        <div>
+        <div className="app-container">
         <Button id="create-pet" variant="contained" onClick={showFormHandler} sx={{marginBottom: '1rem', marginRight:'5rem'}}>
             {showCreatePetForm ? 'Hide' : 'Create Pet'}
             </Button>
-        </div>
         <div>
           { showCreatePetForm &&  <CreatePetForm setShowCreatePetForm={ setShowCreatePetForm} setPetId={ setPetId } /> }
           { !showCreatePetForm &&  <Home/> }
             </div>
     </div>
+</div>
   );
 }
 
