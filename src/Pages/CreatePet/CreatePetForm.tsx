@@ -22,6 +22,22 @@ interface CreatePetFormProps {
   setIsCreatePetFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setPetId: React.Dispatch<React.SetStateAction<string>>;
 }
+const validateForm = ({
+  name,
+  description,
+  age,
+  photoLink,
+}: CreatePet): string =>
+  [
+    name.length < 3 ? "Name must be at least three characters long" : "",
+    description.length < 15
+      ? "Description must be at least fifteen characters long"
+      : "",
+    age < 0 ? "Age must be a positive number" : "",
+    photoLink.length < 1 ? "You must select an image" : "",
+  ]
+    .filter((error) => error !== "")
+    .join(". ");
 
 export default function CreatePetForm({
   setIsCreatePetFormVisible,
@@ -36,23 +52,6 @@ export default function CreatePetForm({
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const [addPet] = useAddPetMutation();
-
-  const validateForm = ({
-    name,
-    description,
-    age,
-    photoLink,
-  }: CreatePet): string =>
-    [
-      name.length < 3 ? "Name must be at least three characters long" : "",
-      description.length < 15
-        ? "Description must be at least fifteen characters long"
-        : "",
-      age < 0 ? "Age must be a positive number" : "",
-      photoLink.length < 1 ? "You must select an image" : "",
-    ]
-      .filter((error) => error !== "")
-      .join(". ");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
