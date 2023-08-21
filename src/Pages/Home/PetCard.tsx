@@ -13,18 +13,18 @@ interface PetCardProps {
 }
 export default function PetCard({ pet }: PetCardProps) {
   const [adoptPetMutation, { isLoading, error }] = useAdoptPetMutation();
-  const [showSuccess, setShowSuccess] = React.useState(false);
-  const [showError, setShowError] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
 
   const adoptPet = async () => {
     if (!isLoading) {
       try {
         const message = await adoptPetMutation({ id: pet.id });
         if (message) {
-          setShowSuccess(true);
+          setIsSuccess(true);
         }
       } catch (error) {
-        setShowError(true);
+        setIsError(true);
       }
     }
   };
@@ -61,7 +61,7 @@ export default function PetCard({ pet }: PetCardProps) {
           </Button>
         </CardActions>
       </Card>
-      {showError && (
+      {isError && (
         <ErrorAlert
           message={
             error
@@ -70,7 +70,7 @@ export default function PetCard({ pet }: PetCardProps) {
           }
         />
       )}
-      {showSuccess && (
+      {isSuccess && (
         <SuccessAlert message={`You successfully adopt ${pet.name}!`} />
       )}
     </div>

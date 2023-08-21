@@ -6,13 +6,12 @@ import SuccessAlert from "./components/SuccessAlert";
 import "./App.css";
 
 function App() {
-  const [showCreatePetForm, setShowCreatePetForm] =
+  const [isCreatePetFormVisible, setIsCreatePetFormVisible] =
     React.useState<boolean>(false);
   const [petId, setPetId] = React.useState<string>("");
 
-  const showFormHandler = () => {
-    //show
-    setShowCreatePetForm((prevState) => !prevState);
+  const toggleCreatePetForm = () => {
+    setIsCreatePetFormVisible((prevState) => !prevState);
   };
 
   return (
@@ -34,19 +33,19 @@ function App() {
         <Button
           id="create-pet"
           variant="contained"
-          onClick={showFormHandler}
+          onClick={toggleCreatePetForm}
           sx={{ marginBottom: "1rem", marginRight: "5rem" }}
         >
-          {showCreatePetForm ? "Hide" : "Create Pet"}
+          {isCreatePetFormVisible ? "Hide" : "Create Pet"}
         </Button>
         <div>
-          {showCreatePetForm && (
+          {isCreatePetFormVisible && (
             <CreatePetForm
-              setShowCreatePetForm={setShowCreatePetForm}
+              setIsCreatePetFormVisible={setIsCreatePetFormVisible}
               setPetId={setPetId}
             />
           )}
-          {!showCreatePetForm && <Home />}
+          {!isCreatePetFormVisible && <Home />}
         </div>
       </div>
     </div>

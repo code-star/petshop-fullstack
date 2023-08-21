@@ -18,12 +18,12 @@ export enum PetType {
   Dog = "DOG",
 }
 interface CreatePetFormProps {
-  setShowCreatePetForm: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsCreatePetFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setPetId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function CreatePetForm({
-  setShowCreatePetForm,
+  setIsCreatePetFormVisible,
   setPetId,
 }: CreatePetFormProps) {
   const [petName, setPetName] = useState<string>("");
@@ -73,7 +73,7 @@ export default function CreatePetForm({
         setPetType(PetType.Cat);
         setPetImage("");
 
-        setShowCreatePetForm((prevState) => !prevState);
+        setIsCreatePetFormVisible((prevState) => !prevState);
         setPetId(pet.id);
       }
     } catch (error) {
