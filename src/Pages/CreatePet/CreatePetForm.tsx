@@ -36,20 +36,27 @@ export default function CreatePetForm({
 
   const [addPet] = useAddPetMutation();
 
-  const validateForm = (): string =>
+  const validateForm = ({
+    name,
+    description,
+    age,
+    photoLink,
+  }: CreatePet): string =>
     [
-      petName.length < 3 ? "Name must be at least three characters long" : "",
-      petDescription.length < 15
+      name.length < 3 ? "Name must be at least three characters long" : "",
+      description.length < 15
         ? "Description must be at least fifteen characters long"
         : "",
-      petAge < 0 ? "Age must be a positive number" : "",
-      petImage.length < 1 ? "You must select an image" : "",
+      age < 0 ? "Age must be a positive number" : "",
+      photoLink.length < 1 ? "You must select an image" : "",
     ]
       .filter((error) => error !== "")
       .join(". ");
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const errors = validateForm();
+
+    const pet = { name: petName, description, age, type, photoLink };
+    const errors = validateForm(pet);
 
     if (errors.length > 0) {
       setErrorMessage(errors);
