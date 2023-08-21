@@ -4,19 +4,19 @@ import ImageListItem from "@mui/material/ImageListItem";
 import { PetType } from "./CreatePetForm";
 
 interface PetImageListProps {
-  petType: PetType;
-  setPetImage: React.Dispatch<React.SetStateAction<string>>;
+  type: PetType;
+  setPhotoLink: React.Dispatch<React.SetStateAction<string>>;
 }
 export default function PetImageList({
-  petType,
-  setPetImage,
+  type,
+  setPhotoLink,
 }: PetImageListProps) {
   const [petImageListLabel, setPetImageListLabel] = React.useState<string>(
-    "Select an image from list",
+    "Select an image from the list below",
   );
 
   const handleListItemClick = (image: string) => {
-    setPetImage(image);
+    setPhotoLink(image);
     setPetImageListLabel("Image selected successfully!");
   };
 
@@ -24,7 +24,7 @@ export default function PetImageList({
     <>
       <label id={"petImageList"}>{petImageListLabel} </label>
       <ImageList sx={{ width: 500, height: 200 }} cols={3} rowHeight={164}>
-        {petType === PetType.Cat &&
+        {type === PetType.Cat &&
           catItemData.map((item) => (
             <ImageListItem
               key={item.img}
@@ -38,7 +38,7 @@ export default function PetImageList({
               />
             </ImageListItem>
           ))}
-        {petType === PetType.Dog &&
+        {type === PetType.Dog &&
           dogItemData.map((item) => (
             <ImageListItem
               key={item.img}

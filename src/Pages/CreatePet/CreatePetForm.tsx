@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import PetImageList from "./PetImageList";
 import { useAddPetMutation } from "../../store/services/petshop";
 import ErrorAlert from "../../components/ErrorAlert";
+import { CreatePet } from "../../types";
 
 export enum PetType {
   Cat = "CAT",
@@ -27,10 +28,10 @@ export default function CreatePetForm({
   setPetId,
 }: CreatePetFormProps) {
   const [petName, setPetName] = useState<string>("");
-  const [petDescription, setPetDescription] = useState<string>("");
-  const [petAge, setPetAge] = useState<number>(0);
-  const [petType, setPetType] = useState<PetType>(PetType.Cat);
-  const [petImage, setPetImage] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [age, setAge] = useState<number>(0);
+  const [type, setType] = useState<PetType>(PetType.Cat);
+  const [photoLink, setPhotoLink] = useState<string>("");
 
   const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -52,6 +53,7 @@ export default function CreatePetForm({
     ]
       .filter((error) => error !== "")
       .join(". ");
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -66,22 +68,16 @@ export default function CreatePetForm({
     setErrorMessage("");
 
     try {
-      const pet = await addPet({
-        name: petName,
-        description: petDescription,
-        age: petAge,
-        type: petType,
-        photoLink: petImage,
-      }).unwrap();
-      if (pet) {
+      const createdPet = await addPet(pet).unwrap();
+      if (createdPet) {
         setPetName("");
-        setPetDescription("");
-        setPetAge(0);
-        setPetType(PetType.Cat);
-        setPetImage("");
+        setDescription("");
+        setAge(0);
+        setType(PetType.Cat);
+        setPhotoLink("");
 
         setIsCreatePetFormVisible((prevState) => !prevState);
-        setPetId(pet.id);
+        setPetId(createdPet.id);
       }
     } catch (error) {
       setErrorMessage(`Something unexpected happened. Pet not created!`);
@@ -112,7 +108,7 @@ export default function CreatePetForm({
             placeholder="Your pet's name"
             onChange={(event) => setPetName(event.target.value)}
             fullWidth
-            helperText={"Name must be at least three characters long"}
+            helperText="Name must be at least three characters long"
             error={petName.length < 3}
           />
         </div>
@@ -122,13 +118,13 @@ export default function CreatePetForm({
             id="description"
             label="Description"
             variant="outlined"
-            value={petDescription}
-            onChange={(event) => setPetDescription(event.target.value)}
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
             placeholder="Your pet's description"
-            helperText={"Description must be at least fifteen characters long"}
+            helperText="Description must be at least fifteen characters long"
             multiline
             maxRows={3}
-            error={petDescription.length < 15}
+            error={description.length < 15}
             fullWidth
           />
         </div>
@@ -140,11 +136,11 @@ export default function CreatePetForm({
             type="number"
             variant="outlined"
             aria-valuemin={0}
-            value={petAge}
-            helperText={"Age must be at least 0"}
+            value={age}
+            helperText="Age must be at least 0"
             fullWidth
-            onChange={(event) => setPetAge(Number(event.target.value))}
-            error={petAge < 0}
+            onChange={(event) => setAge(Number(event.target.value))}
+            error={age < 0}
             InputLabelProps={{
               shrink: true,
             }}
@@ -155,23 +151,23 @@ export default function CreatePetForm({
             <FormLabel id="pet-type">Pet Type</FormLabel>
             <RadioGroup row aria-labelledby="pet-type" name="pet-type">
               <FormControlLabel
-                checked={petType === PetType.Cat}
+                checked
                 value={PetType.Cat}
                 control={<Radio />}
                 label="Cat"
-                onClick={(_) => setPetType(PetType.Cat)}
+                onClick={(_) => setType(PetType.Cat)}
               />
               <FormControlLabel
                 value={PetType.Dog}
                 control={<Radio />}
                 label="Dog"
-                onClick={(_) => setPetType(PetType.Dog)}
+                onClick={(_) => setType(PetType.Dog)}
               />
             </RadioGroup>
           </FormControl>
         </div>
         <div>
-          <PetImageList petType={petType} setPetImage={setPetImage} />
+          <PetImageList type={type} setPhotoLink={setPhotoLink} />
           <Button id="submit" variant="contained" color="primary" type="submit">
             {" "}
             Submit{" "}
