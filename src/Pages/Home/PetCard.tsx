@@ -12,7 +12,7 @@ interface PetCardProps {
   pet: Pet;
 }
 export default function PetCard({ pet }: PetCardProps) {
-  const [adoptPetMutation, { isLoading, error, data }] = useAdoptPetMutation();
+  const [adoptPetMutation, { isLoading, error}] = useAdoptPetMutation();
   const [showSuccess, setShowSuccess] = React.useState(false);
   const [showError, setShowError] = React.useState(false);
 

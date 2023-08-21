@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   TextField,
   Button,
@@ -9,7 +8,7 @@ import {
   FormLabel,
   FormControlLabel,
 } from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
 import PetImageList from "./PetImageList";
 import { useAddPetMutation } from "../../store/services/petshop";
 import ErrorAlert from "../../components/ErrorAlert";
@@ -53,11 +52,11 @@ export default function CreatePetForm({
     const errors = validateForm();
 
     if (errors.length > 0) {
-      setErrorMessage((prevState) => errors);
+      setErrorMessage(errors);
       return;
     }
 
-    setErrorMessage((prevState) => "");
+    setErrorMessage("");
 
     try {
       const pet = await addPet({
@@ -68,14 +67,14 @@ export default function CreatePetForm({
         photoLink: petImage,
       }).unwrap();
       if (pet) {
-        setPetName((prevState) => "");
-        setPetDescription((prevState) => "");
-        setPetAge((prevState) => 0);
-        setPetType((prevState) => PetType.Cat);
-        setPetImage((prevState) => "");
+        setPetName("");
+        setPetDescription("");
+        setPetAge(0);
+        setPetType(PetType.Cat);
+        setPetImage("");
 
         setShowCreatePetForm((prevState) => !prevState);
-        setPetId((prevState) => pet.id);
+        setPetId(pet.id);
       }
     } catch (error) {
       setErrorMessage(`Something unexpected happened. Pet not created!`);
@@ -153,13 +152,13 @@ export default function CreatePetForm({
                 value={PetType.Cat}
                 control={<Radio />}
                 label="Cat"
-                onClick={(event) => setPetType(PetType.Cat)}
+                onClick={(_) => setPetType(PetType.Cat)}
               />
               <FormControlLabel
                 value={PetType.Dog}
                 control={<Radio />}
                 label="Dog"
-                onClick={(event) => setPetType(PetType.Dog)}
+                onClick={(_) => setPetType(PetType.Dog)}
               />
             </RadioGroup>
           </FormControl>

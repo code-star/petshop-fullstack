@@ -28,7 +28,7 @@ export default function PetImageList({
           catItemData.map((item) => (
             <ImageListItem
               key={item.img}
-              onClick={(event) => handleListItemClick(item.img)}
+              onClick={(_) => handleListItemClick(item.img)}
             >
               <img
                 src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
@@ -42,7 +42,7 @@ export default function PetImageList({
           dogItemData.map((item) => (
             <ImageListItem
               key={item.img}
-              onClick={(event) => handleListItemClick(item.img)}
+              onClick={(_) => handleListItemClick(item.img)}
             >
               <img
                 src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
