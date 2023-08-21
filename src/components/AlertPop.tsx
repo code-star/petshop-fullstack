@@ -4,18 +4,19 @@ import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
 import CloseIcon from "@mui/icons-material/Close";
-interface ErrorAlertProps {
+interface AlertPopProps {
   message: string;
+  severity: "error" | "success";
 }
 
-export default function ErrorAlert({ message }: ErrorAlertProps) {
+export default function AlertPop({ message, severity }: AlertPopProps) {
   const [open, setOpen] = React.useState(true);
 
   return (
     <Box sx={{ width: "100%" }}>
       <Collapse in={open}>
         <Alert
-          severity={"error"}
+          severity={severity}
           action={
             <IconButton
               aria-label="close"

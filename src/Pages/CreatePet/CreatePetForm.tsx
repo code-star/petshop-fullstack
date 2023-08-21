@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 import PetImageList from "./PetImageList";
 import { useAddPetMutation } from "../../store/services/petShopApi";
-import ErrorAlert from "../../components/ErrorAlert";
+import AlertPop from "../../components/AlertPop";
 import { CreatePet } from "../../types";
 
 export enum PetType {
@@ -85,7 +85,9 @@ export default function CreatePetForm({
 
   return (
     <>
-      {errorMessage.length > 0 && <ErrorAlert message={errorMessage} />}
+      {errorMessage.length > 0 && (
+        <AlertPop message={errorMessage} severity={"error"} />
+      )}
       <Box
         component="form"
         sx={{

@@ -6,8 +6,7 @@ import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import type { Pet } from "../../types";
 import { useAdoptPetMutation } from "../../store/services/petShopApi";
-import SuccessAlert from "../../components/SuccessAlert";
-import ErrorAlert from "../../components/ErrorAlert";
+import AlertPop from "../../components/AlertPop";
 interface PetCardProps {
   pet: Pet;
 }
@@ -62,14 +61,16 @@ export default function PetCard({ pet }: PetCardProps) {
         </CardActions>
       </Card>
       {isError && (
-        <ErrorAlert
-          message={
-          "An error occurred and pet can't be adopted"
-          }
+        <AlertPop
+          message={"An error occurred and pet can't be adopted"}
+          severity={"error"}
         />
       )}
       {isSuccess && (
-        <SuccessAlert message={`You successfully adopt ${pet.name}!`} />
+        <AlertPop
+          message={`You successfully adopt ${pet.name}!`}
+          severity={"success"}
+        />
       )}
     </div>
   );
