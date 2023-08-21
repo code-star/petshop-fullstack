@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { petShopApi } from "./services/petshop";
+import { petShopApi } from "./services/petShopApi";
 
 export const store = configureStore({
   reducer: {

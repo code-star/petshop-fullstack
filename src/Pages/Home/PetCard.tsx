@@ -5,7 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import type { Pet } from "../../types";
-import { useAdoptPetMutation } from "../../store/services/petshop";
+import { useAdoptPetMutation } from "../../store/services/petShopApi";
 import SuccessAlert from "../../components/SuccessAlert";
 import ErrorAlert from "../../components/ErrorAlert";
 interface PetCardProps {
@@ -64,9 +64,7 @@ export default function PetCard({ pet }: PetCardProps) {
       {isError && (
         <ErrorAlert
           message={
-            error
-              ? error.toString()
-              : "An error occurred and pet can't be adopted"
+          "An error occurred and pet can't be adopted"
           }
         />
       )}

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import PetImageList from "./PetImageList";
-import { useAddPetMutation } from "../../store/services/petshop";
+import { useAddPetMutation } from "../../store/services/petShopApi";
 import ErrorAlert from "../../components/ErrorAlert";
 import { CreatePet } from "../../types";
 

@@ -1,4 +1,4 @@
-import { useGetPetsQuery } from "../../store/services/petshop";
+import { useGetPetsQuery } from "../../store/services/petShopApi";
 import { Error } from "@mui/icons-material";
 import { Container } from "@mui/material";
 import { Pet } from "../../types";
