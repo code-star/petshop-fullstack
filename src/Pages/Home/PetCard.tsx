@@ -13,7 +13,7 @@ interface PetCardProps {
 export default function PetCard({ pet }: PetCardProps) {
   const [adoptPetMutation, { isLoading, error }] = useAdoptPetMutation();
   const [isSuccess, setIsSuccess] = React.useState(false);
-  const [isError, setIsError] = React.useState(false);
+  const [hasError, setHasError] = React.useState(false);
 
   const adoptPet = async () => {
     if (!isLoading) {
@@ -23,7 +23,7 @@ export default function PetCard({ pet }: PetCardProps) {
           setIsSuccess(true);
         }
       } catch (error) {
-        setIsError(true);
+        setHasError(true);
       }
     }
   };
@@ -60,8 +60,8 @@ export default function PetCard({ pet }: PetCardProps) {
           </Button>
         </CardActions>
       </Card>
-      {isError && (
-        <AlertPop
+      {hasError && (
+        <AlertPopup
           message={"An error occurred and pet can't be adopted"}
           severity={"error"}
         />
