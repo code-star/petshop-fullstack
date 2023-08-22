@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import type { Pet } from "../../types";
 import { useAdoptPetMutation } from "../../store/services/petShopApi";
-import AlertPop from "../../components/AlertPop";
+import AlertPopup from "../../components/AlertPopup";
 interface PetCardProps {
   pet: Pet;
 }
@@ -67,7 +67,7 @@ export default function PetCard({ pet }: PetCardProps) {
         />
       )}
       {isSuccess && (
-        <AlertPop
+        <AlertPopup
           message={`You successfully adopt ${pet.name}!`}
           severity={"success"}
         />

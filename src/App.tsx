@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, Button } from "@mui/material";
 import { Home } from "./Pages/Home/Home";
 import CreatePetForm from "./Pages/CreatePet/CreatePetForm";
-import AlertPop from "./components/AlertPop";
+import AlertPopup from "./components/AlertPopup";
 import "./App.css";
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
           Pet Shop
         </Typography>
         {petId.length > 0 && (
-          <AlertPop
+          <AlertPopup
             message={`You successfully add ${petId} !`}
             severity={"success"}
           />
