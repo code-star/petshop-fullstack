@@ -12,12 +12,9 @@ import React, { useState } from "react";
 import PetImageList from "./PetImageList";
 import { useAddPetMutation } from "../../store/services/petShopApi";
 import AlertPopup from "../../components/AlertPopup";
-import { CreatePet } from "../../types";
+import { Pet } from "../../types";
+import { PetType } from "../../types";
 
-export enum PetType {
-  Cat = "CAT",
-  Dog = "DOG",
-}
 interface CreatePetFormProps {
   setIsCreatePetFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setPetId: React.Dispatch<React.SetStateAction<string>>;
@@ -27,7 +24,7 @@ const validateForm = ({
   description,
   age,
   photoLink,
-}: CreatePet): string =>
+}: Omit<Pet, "id" | "adopted">): string =>
   [
     name.length < 3 ? "Name must be at least three characters long" : "",
     description.length < 15

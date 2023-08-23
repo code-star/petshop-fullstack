@@ -3,15 +3,20 @@ export interface Pet {
   name: string;
   description: string;
   age: number;
-  type: string;
+  type: PetType;
   adopted: boolean;
   photoLink: string;
 }
 
-export interface CreatePet {
-  name: string;
-  description: string;
-  age: number;
-  type: string;
-  photoLink: string;
+export enum PetType {
+  Cat = "CAT",
+  Dog = "DOG",
 }
+
+export interface User {
+  userName: string;
+  password: string;
+  role: Role;
+}
+
+type Role = "CUSTOMER" | "ADMIN" | null;
