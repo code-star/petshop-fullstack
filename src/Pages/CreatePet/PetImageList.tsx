@@ -1,7 +1,7 @@
 import React from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { PetType } from "./CreatePetForm";
+import { PetType } from "../../types";
 
 interface PetImageListProps {
   type: PetType;
