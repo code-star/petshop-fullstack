@@ -1,10 +1,6 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -13,7 +9,7 @@ import { setUser } from "../../store/services/authSlice";
 import { useDispatch } from "react-redux";
 
 export default function SignIn() {
-  const [loginMutation, { isLoading }] = useLoginMutation();
+  const [loginMutation] = useLoginMutation();
   const dispatch = useDispatch();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
