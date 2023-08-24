@@ -10,22 +10,23 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useLoginMutation } from "../../store/services/authApi";
 import { setUser } from "../../store/services/authSlice";
-import { store } from "../../store/store";
+import { useDispatch } from "react-redux";
 
 export default function SignIn() {
   const [loginMutation, { isLoading }] = useLoginMutation();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const { userName, password } = {
+    const user = {
       userName: event.currentTarget.email.value,
       password: event.currentTarget.password.value,
     };
     try {
-      const role = await loginMutation({ userName, password }).unwrap();
+      const role = await loginMutation(user).unwrap();
 
       if (role) {
-        store.dispatch(setUser({ userName, password }));
+        dispatch(setUser(user));
       }
     } catch (error) {
       console.log(error);
@@ -66,10 +67,6 @@ export default function SignIn() {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -78,18 +75,6 @@ export default function SignIn() {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
         </Box>
       </Box>
     </Container>
