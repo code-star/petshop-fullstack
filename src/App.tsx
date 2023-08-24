@@ -27,16 +27,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <Typography
-          gutterBottom
-          variant="h3"
-          component="div"
-          sx={{ textAlign: "center" }}
-        >
-          Pet Shop
-        </Typography>
-      </header>
+      <Header />
       <div className="app-container">
         {!role && <SignIn />}
         {role === Role.Admin && (
