@@ -34,7 +34,7 @@ function App() {
           <section>
             {petId.length > 0 && (
               <AlertPopup
-                message={`You successfully add ${petId} !`}
+                message={`You successfully added ${petId} !`}
                 severity={"success"}
               />
             )}

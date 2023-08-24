@@ -73,7 +73,7 @@ export default function PetCard({ pet }: PetCardProps) {
       )}
       {isSuccess && (
         <AlertPopup
-          message={`You successfully adopt ${pet.name}!`}
+          message={`You successfully adopted ${pet.name}!`}
           severity={"success"}
         />
       )}
