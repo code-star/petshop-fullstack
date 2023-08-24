@@ -12,8 +12,7 @@ import React, { useState } from "react";
 import PetImageList from "./PetImageList";
 import { useAddPetMutation } from "../../store/services/petShopApi";
 import AlertPopup from "../../components/AlertPopup";
-import { Pet } from "../../types";
-import { PetType } from "../../types";
+import { Pet, PetType } from "../../types";
 
 interface CreatePetFormProps {
   setIsCreatePetFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -149,7 +148,7 @@ export default function CreatePetForm({
             <FormLabel id="pet-type">Pet Type</FormLabel>
             <RadioGroup row aria-labelledby="pet-type" name="pet-type">
               <FormControlLabel
-                checked
+                checked={type === PetType.Cat}
                 value={PetType.Cat}
                 control={<Radio />}
                 label="Cat"
