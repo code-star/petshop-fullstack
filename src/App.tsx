@@ -4,11 +4,18 @@ import { Home } from "./Pages/Home/Home";
 import CreatePetForm from "./Pages/CreatePet/CreatePetForm";
 import AlertPopup from "./components/AlertPopup";
 import "./App.css";
+import SignIn from "./Pages/SignIn";
+import {useLoginMutation} from "./store/services/authApi";
 
 function App() {
+ const [loginMutation, { isLoading, data }] = useLoginMutation();
+ 
+
   const [isCreatePetFormVisible, setIsCreatePetFormVisible] =
     React.useState<boolean>(false);
   const [petId, setPetId] = React.useState<string>("");
+
+
 
   const toggleCreatePetForm = () => {
     setIsCreatePetFormVisible((prevState) => !prevState);
@@ -25,14 +32,15 @@ function App() {
         >
           Pet Shop
         </Typography>
-        {petId.length > 0 && (
-          <AlertPopup
-            message={`You successfully add ${petId} !`}
-            severity={"success"}
-          />
-        )}
       </header>
       <div className="app-container">
+        <SignIn/>
+        {petId.length > 0 && (
+            <AlertPopup
+                message={`You successfully add ${petId} !`}
+                severity={"success"}
+            />
+        )}
         <Button
           id="create-pet"
           variant="contained"

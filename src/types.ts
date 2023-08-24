@@ -16,7 +16,9 @@ export enum PetType {
 export interface User {
   userName: string;
   password: string;
-  role: Role;
 }
 
-type Role = "CUSTOMER" | "ADMIN" | null;
+export enum Role {
+  Admin = "ADMIN",
+  Customer = "CUSTOMER",
+}
