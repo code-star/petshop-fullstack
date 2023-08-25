@@ -7,6 +7,9 @@ import { Button, CardActionArea, CardActions } from "@mui/material";
 import type { Pet } from "../../types";
 import { useAdoptPetMutation } from "../../store/services/petShopApi";
 import AlertPopup from "../../components/AlertPopup";
+import { useSelector } from "react-redux";
+import { selectCurrentRole } from "../../store/services/authSlice";
+import { Role } from "../../types";
 interface PetCardProps {
   pet: Pet;
 }
@@ -14,6 +17,7 @@ export default function PetCard({ pet }: PetCardProps) {
   const [adoptPetMutation, { isLoading }] = useAdoptPetMutation();
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [hasError, setHasError] = React.useState(false);
+  const role = useSelector(selectCurrentRole);
 
   const adoptPet = async () => {
     if (!isLoading) {
@@ -53,8 +57,9 @@ export default function PetCard({ pet }: PetCardProps) {
           <Button
             size="small"
             color="primary"
-            disabled={pet.adopted}
+            disabled={pet.adopted || role !== Role.Customer}
             onClick={adoptPet}
+            sx={{ display: role === Role.Customer ? "block" : "none" }}
           >
             {pet.adopted ? "Reserved" : "Adopt"}
           </Button>
@@ -68,7 +73,7 @@ export default function PetCard({ pet }: PetCardProps) {
       )}
       {isSuccess && (
         <AlertPopup
-          message={`You successfully adopt ${pet.name}!`}
+          message={`You successfully adopted ${pet.name}!`}
           severity={"success"}
         />
       )}

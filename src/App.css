@@ -20,3 +20,10 @@
   align-items: center;
   justify-content: center;
 }
+
+.profile {
+  display: flex;
+  font-size: small;
+  max-width: 30rem;
+  align-self: flex-end;
+}
