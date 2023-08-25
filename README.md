@@ -1,6 +1,6 @@
 # Pet Shop App
 
-![Screenrecording of the app](petshop-app.gif)
+![Screenrecording of the app](client/petshop-app.gif)
 
 ## Description
 
